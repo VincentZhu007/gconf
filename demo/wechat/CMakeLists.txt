@@ -1,0 +1,2 @@
+add_executable(wechat_parser wechat_parser.cpp)
+target_link_libraries(wechat_parser jsoncpp_lib)
