@@ -3,16 +3,18 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 project(gconf LANGUAGES CXX)
 
 set(CXX_STANDARD 11)
+set(CXX_STANDARD_REQUIRED ON)
 
-include(FetchContent)
+option(GCONF_WITH_TESTS "build gconf tests?" ON)
+message(STATUS "build gconf tests? " ${GCONF_WITH_TESTS})
 
-# third_party module: jsoncpp
-FetchContent_Declare(jsoncpp
-        URL https://github.com/open-source-parsers/jsoncpp/archive/1.9.4.tar.gz)
-FetchContent_MakeAvailable(jsoncpp)
+add_subdirectory(third_party)
+
+add_subdirectory(demo)
 
 add_subdirectory(src)
 
-add_subdirectory(test)
-
-add_subdirectory(demo)
+if(GCONF_WITH_TESTS)
+  include(CTest)
+  add_subdirectory(tests)
+endif()
