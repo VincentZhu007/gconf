@@ -15,6 +15,6 @@ add_subdirectory(demo)
 add_subdirectory(src)
 
 if(GCONF_WITH_TESTS)
-  include(CTest)
-  add_subdirectory(tests)
+    include(CTest)
+    add_subdirectory(tests)
 endif()
