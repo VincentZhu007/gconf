@@ -13,20 +13,33 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  *
- * Description: 手工编写wechat json配置的解析代码，作为示例提取解析规律。
+ * Description: wechat解析函数测试
  */
 #include <iostream>
-#include "json/json.h"
+#include "gtest/gtest.h"
 
+using namespace std;
 
-
-int main()
+class WeChatConfTest: public ::testing::Test
 {
+protected:
+    static void SetUpTestCase()
+    {
+        cout << "setup test suit" << endl;
+    }
+    static void TearDownTestCase()
+    {
+        cout << "tear down test suit" << endl;
+    }
+    void SetUp()
+    {
+        cout << "setup" << endl;
+    }
+    void TearDown()
+    {
+        cout << "tear down" << endl;
+    }
+};
 
-    Json::Value json;
-    json["name"] = "app";
-    json["age"] = 18;
 
-    std::cout << json.toStyledString() << std::endl;
-    return 0;
-}
+

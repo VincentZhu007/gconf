@@ -15,18 +15,4 @@
  *
  * Description: 手工编写wechat json配置的解析代码，作为示例提取解析规律。
  */
-#include <iostream>
-#include "json/json.h"
-
-
-
-int main()
-{
-
-    Json::Value json;
-    json["name"] = "app";
-    json["age"] = 18;
-
-    std::cout << json.toStyledString() << std::endl;
-    return 0;
-}
+#include "WeCharConf.h"

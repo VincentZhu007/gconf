@@ -11,13 +11,21 @@ int Add(int a, int b)
 class DemoTest: public ::testing::Test
 {
 protected:
+    static void SetUpTestCase()
+    {
+        cout << "setup test suit" << endl;
+    }
+    static void TearDownTestCase()
+    {
+        cout << "tear down test suit" << endl;
+    }
     void SetUp()
     {
-        cout << "setup TestAdd" << endl;
+        cout << "setup" << endl;
     }
     void TearDown()
     {
-        cout << "tear down TestAdd" << endl;
+        cout << "tear down" << endl;
     }
 };
 
