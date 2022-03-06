@@ -16,13 +16,25 @@
  * Description: 手工编写wechat json配置的解析代码，作为示例提取解析规律。
  */
 
-#ifndef GCONF_WECHARCONF_H
-#define GCONF_WECHARCONF_H
+#ifndef GCONF_WECHATCONF_H
+#define GCONF_WECHATCONF_H
 
+#include <iostream>
+#include <vector>
+#include <string>
 
-class WeCharConf {
+namespace gconf {
+namespace demo {
+class WeChatConf {
+public:
+    WeChatConf() = default;
+    int Parse(const std::string &confPath);
+    int Parse(std::istream &in);
+    std::vector<std::string> GetPages() const;
 
+private:
+    std::vector<std::string> pages_;
 };
-
-
-#endif //GCONF_WECHARCONF_H
+}
+}
+#endif //GCONF_WECHATCONF_H

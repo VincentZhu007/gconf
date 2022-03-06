@@ -22,7 +22,6 @@
 
 int main()
 {
-
     Json::Value json;
     json["name"] = "app";
     json["age"] = 18;

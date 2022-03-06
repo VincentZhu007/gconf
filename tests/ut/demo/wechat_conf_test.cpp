@@ -16,30 +16,52 @@
  * Description: wechat解析函数测试
  */
 #include <iostream>
+#include <string>
 #include "gtest/gtest.h"
+#include "demo/wechat/WeChatConf.h"
+
 
 using namespace std;
+using gconf::demo::WeChatConf;
 
 class WeChatConfTest: public ::testing::Test
 {
 protected:
     static void SetUpTestCase()
     {
-        cout << "setup test suit" << endl;
+        cout << "set up the whole test suit" << endl;
     }
     static void TearDownTestCase()
     {
-        cout << "tear down test suit" << endl;
+        cout << "tear down the whole test suit" << endl;
     }
     void SetUp()
     {
-        cout << "setup" << endl;
+        cout << "set up test" << endl;
     }
     void TearDown()
     {
-        cout << "tear down" << endl;
+        cout << "tear down test" << endl;
     }
 };
 
+TEST_F(WeChatConfTest, GetPages)
+{
+    stringstream s;
+    s << R"({
+        "pages": [
+            "pages/index/index",
+            "pages/logs/index"
+        ]
+    })" << std::endl;
+    cout << s.str();
 
+    std::vector<std::string> expectedPages = {
+        "pages/index/index",
+        "pages/logs/index"
+    };
 
+    WeChatConf weChatConf;
+    ASSERT_EQ(weChatConf.Parse(s), 0);
+    ASSERT_EQ(weChatConf.GetPages(), expectedPages);
+}
