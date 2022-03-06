@@ -22,6 +22,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include "json/json.h"
 
 namespace gconf {
 namespace demo {
@@ -31,9 +33,15 @@ public:
     int Parse(const std::string &confPath);
     int Parse(std::istream &in);
     std::vector<std::string> GetPages() const;
+    std::unordered_map<std::string, std::string> GetWindow() const;
 
 private:
-    std::vector<std::string> pages_;
+    void DoParsePages(const Json::Value root);
+    void DoParseWindow(const Json::Value root);
+    static int DoReadJson(std::istream &in, Json::Value &root);
+
+    std::vector<std::string> pages_ = {};
+    std::unordered_map<std::string, std::string> window_ = {};
 };
 }
 }

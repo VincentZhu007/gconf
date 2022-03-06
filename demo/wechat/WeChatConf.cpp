@@ -17,12 +17,9 @@
  */
 #include "WeChatConf.h"
 #include <fstream>
-#include "json/json.h"
 
 namespace gconf {
 namespace demo {
-const std::string FIELD_PAGES = "pages";
-
 int WeChatConf::Parse(const std::string &confPath)
 {
     std::ifstream ifs(confPath);
@@ -38,6 +35,17 @@ int WeChatConf::Parse(const std::string &confPath)
 int WeChatConf::Parse(std::istream &in)
 {
     Json::Value root;
+    auto ret = DoReadJson(in, root);
+    if (ret != 0) {
+        return ret;
+    }
+    DoParsePages(root);
+    DoParseWindow(root);
+    return 0;
+}
+
+int WeChatConf::DoReadJson(std::istream &in, Json::Value &root)
+{
     Json::CharReaderBuilder rbuilder;
     rbuilder["collectComments"] = false;
     std::string errs;
@@ -46,16 +54,37 @@ int WeChatConf::Parse(std::istream &in)
         std::cerr << "parse json failed: " << errs << std::endl;
         return -2;
     }
+    return 0;
+}
+
+const std::string FIELD_PAGES = "pages";
+
+void WeChatConf::DoParsePages(const Json::Value root)
+{
     auto size = root[FIELD_PAGES].size();
     for (decltype(size) i = 0; i < size; i++) {
         pages_.push_back(root[FIELD_PAGES][i].asString());
     }
-    return 0;
+}
+
+const std::string FIELD_WINDOW = "window";
+
+void WeChatConf::DoParseWindow(const Json::Value root)
+{
+    auto keys = root[FIELD_WINDOW].getMemberNames();
+    for (const auto &key: keys) {
+        window_.emplace(key, root[FIELD_WINDOW][key].asString());
+    }
 }
 
 std::vector<std::string> WeChatConf::GetPages() const
 {
     return pages_;
+}
+
+std::unordered_map<std::string, std::string> WeChatConf::GetWindow() const
+{
+    return window_;
 }
 }
 }

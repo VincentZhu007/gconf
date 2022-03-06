@@ -54,14 +54,33 @@ TEST_F(WeChatConfTest, GetPages)
             "pages/logs/index"
         ]
     })" << std::endl;
-    cout << s.str();
-
-    std::vector<std::string> expectedPages = {
-        "pages/index/index",
-        "pages/logs/index"
-    };
 
     WeChatConf weChatConf;
     ASSERT_EQ(weChatConf.Parse(s), 0);
-    ASSERT_EQ(weChatConf.GetPages(), expectedPages);
+    auto pages = weChatConf.GetPages();
+
+    decltype(pages) expectedPages = {
+        "pages/index/index",
+        "pages/logs/index"
+    };
+    ASSERT_EQ(pages, expectedPages);
+}
+
+TEST_F(WeChatConfTest, GetWindow)
+{
+    stringstream s;
+    s << R"({
+        "window": {
+            "navigationBarTitleText": "Demo"
+        }
+    })" << std::endl;
+
+    WeChatConf weChatConf;
+    ASSERT_EQ(weChatConf.Parse(s), 0);
+    auto window = weChatConf.GetWindow();
+
+    decltype(window) expectedWindow = {
+        {"navigationBarTitleText", "Demo"}
+    };
+    ASSERT_EQ(window, expectedWindow);
 }
